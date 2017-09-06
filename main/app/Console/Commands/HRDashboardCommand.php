@@ -41,28 +41,43 @@ class HRDashboardCommand extends Command
     public function handle()
     {
         //List of users except role type is admin and HR
-        $usersList = DB::table('users')->where('role_id', '<>', 1)->get();
-        $hr_setting_id = DB::table('point_value_settings')
+        $usersList = DB::table('users')->whereNotIn( 'role_id', [1, 2])->get(); 
+        $hrList = DB::table('users')->where( 'role_id',  2)->pluck('id');
+        $setting_id = DB::table('point_value_settings')
                         ->where('type', 'HR')
                         ->pluck('id');
 
         $now = Carbon::now();
         $year =  $now->year;
         $month =  $now->month;
-        foreach ($hr_setting_id  as $hr_id) {
 
+
+        foreach ($hrList as $hr) {
             foreach ($usersList as $value) {
-            $data = array();
-            $data = array('settings_id' => $hr_id, 
-                              'users_id' => $value->id, 
-                              'revision_id' => 2,
-                              'months' => $month,
-                              'year'=>$year,
-                              'created_at'=>date("Y-m-d h:i:s"));
-            DB::table('evaluate_tickets')->insert($data);
-            }
-        }    
+                $data = array();
+                $data = array('settings_id' => $setting_id[0],
+                                  'users_id' => $value->id,
+                                  'revision_id' => $hr,
+                                  'months' => $month,
+                                  'year'=>$year,
+                                  'created_at'=>date("Y-m-d h:i:s"));
 
-        $this->info('All  users are Inserted successfully!');
+                $user_exit = DB::table('evaluate_tickets')
+                                ->where('settings_id' , $setting_id[0])
+                                ->where('users_id' , $value->id)
+                                ->where('revision_id' , $hr)
+                                ->where('months' , $month)
+                                ->where('year' , $year)
+                                ->first();
+
+                if (is_null($user_exit)) {
+
+                    DB::table('evaluate_tickets')->insert($data);
+                    $this->info('All  users are Inserted successfully!');
+                } else {
+                    $this->info('All  users are Already exit successfully!');
+                }
+            }
+        }
     }
 }
