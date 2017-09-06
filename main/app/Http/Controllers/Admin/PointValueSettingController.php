@@ -62,7 +62,7 @@ class PointValueSettingController extends Controller
         if($input['value'] ==  $get_data[0]->value){
 
             $request->session()->flash('alert-success', 'Records are matched');
-            return Redirect::route('add_points', ['id' => $input['selected_role']])->with('succes', 'Du har sendt en besked');
+            return Redirect::route('add_points', ['id' => $input['selected_role']]);
         }
         else {
             // Update an entry
