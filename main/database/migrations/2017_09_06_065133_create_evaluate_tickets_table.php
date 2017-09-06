@@ -17,7 +17,7 @@ class CreateEvaluateTicketsTable extends Migration {
             $table->integer('settings_id')->comment = "This refers to point value settings";
             $table->integer('users_id');
             $table->integer('revision_id')->comment = "user id of those who are Project Manager and Responsible";
-            $table->integer('project_id');
+            $table->integer('project_id')->nullable();
             $table->integer('months');
             $table->integer('year');
             $table->enum('status', ['enable', 'disable']);
