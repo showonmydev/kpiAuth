@@ -33,9 +33,7 @@ class ProjectDeveloperCommand extends Command
     }
 
     public function checkIfUserExits($data){
-        $user_exit = DB::table('evaluate_tickets')
-                        ->where($data)
-                        ->first();
+        $user_exit = DB::table('evaluate_tickets')->where($data)->first();
 
         if (is_null($user_exit)) {
             $data['created_at'] = date("Y-m-d h:i:s");
@@ -86,12 +84,6 @@ class ProjectDeveloperCommand extends Command
                     $data['users_id'] = $usersid;
                     $this->checkIfUserExits($data);
                 }
-            }
-
-            //Entry for Responsible with BA
-            {
-                $data['users_id'] = $value->business_analyst;
-                $this->checkIfUserExits($data);
             }
         }
     }
