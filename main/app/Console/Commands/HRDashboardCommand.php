@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Model;
 use DB;
 
 class HRDashboardCommand extends Command
@@ -63,11 +62,11 @@ class HRDashboardCommand extends Command
             foreach ($usersList as $value) {
                 $data = array();
                 $data = ['settings_id' => $setting_id[0],
-                                  'users_id' => $value->id,
-                                  'revision_id' => $hr->id,
-                                  'months' => $month,
-                                  'year'=>$year
-                                  ];
+                         'users_id' => $value->id,
+                         'revision_id' => $hr->id,
+                         'months' => $month,
+                         'year'=>$year
+                        ];
 
                 $user_exit = DB::table('evaluate_tickets')
                                 ->where($data)
