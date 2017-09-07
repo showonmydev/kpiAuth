@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ProjectDeveloperCommand::class,
         Commands\HRDashboardCommand::class,
+        Commands\BaSeniorCommand::class,
     ];
 
     /**
@@ -25,8 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('hrdashboard:command')->hourly();
+        $schedule->command('hrdashboard:command')->monthly();
         $schedule->command('projectdeveloper:command')->monthly();
+        $schedule->command('basenior:command')->monthly();
     }
 
     /**
