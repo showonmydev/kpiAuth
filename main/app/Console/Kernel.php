@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-         Commands\HRDashboardCommand::class,
+        Commands\ProjectDeveloperCommand::class,
+        Commands\HRDashboardCommand::class,
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('hrdashboard:command')->hourly();
+        $schedule->command('projectdeveloper:command')->monthly();
     }
 
     /**
