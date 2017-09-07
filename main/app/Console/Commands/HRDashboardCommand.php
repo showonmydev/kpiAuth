@@ -41,8 +41,15 @@ class HRDashboardCommand extends Command
     public function handle()
     {
         //List of users except role type is admin and HR
-        $usersList = DB::table('users')->whereNotIn( 'role_id', [1, 2])->get(); 
-        $hrList = DB::table('users')->where( 'role_id',  2)->pluck('id');
+        $usersList = DB::table('users')->where('role_id', '<>', 1)->get();
+        $hrList = array();
+
+        foreach ($usersList as $key => $value) {
+            if($value->role_id == 2){
+                $hrList[] = $value;
+                unset($usersList[$key]);
+            }
+        }
         $setting_id = DB::table('point_value_settings')
                         ->where('type', 'HR')
                         ->pluck('id');
@@ -55,22 +62,19 @@ class HRDashboardCommand extends Command
         foreach ($hrList as $hr) {
             foreach ($usersList as $value) {
                 $data = array();
-                $data = array('settings_id' => $setting_id[0],
+                $data = ['settings_id' => $setting_id[0],
                                   'users_id' => $value->id,
-                                  'revision_id' => $hr,
+                                  'revision_id' => $hr->id,
                                   'months' => $month,
-                                  'year'=>$year,
-                                  'created_at'=>date("Y-m-d h:i:s"));
+                                  'year'=>$year
+                                  ];
 
                 $user_exit = DB::table('evaluate_tickets')
-                                ->where('settings_id' , $setting_id[0])
-                                ->where('users_id' , $value->id)
-                                ->where('revision_id' , $hr)
-                                ->where('months' , $month)
-                                ->where('year' , $year)
+                                ->where($data)
                                 ->first();
 
                 if (is_null($user_exit)) {
+                    $data['created_at'] = date("Y-m-d h:i:s");
 
                     DB::table('evaluate_tickets')->insert($data);
                     $this->info('All  users are Inserted successfully!');
