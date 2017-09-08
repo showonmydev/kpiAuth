@@ -72,7 +72,7 @@ $(function() {
         }
     });
 
-    $("#selected_role").on('change', function(e) {
+    $("#type").on('change', function(e) {
 
         var selected = $(this).val();
         if(selected == ""){
@@ -86,5 +86,5 @@ $(function() {
             window.location.href = x + selected;
         else
             window.location.href = x + 'add_points/' + selected;
-    })
+    });
 });

@@ -2,10 +2,6 @@
 @section('content')
 
 <!-- Main content -->
-<?php 
-	
-
-?>
 <section class="content">
    <div class="row">
       <div class="col-md-12">
@@ -47,7 +43,7 @@
                         <select class="form-control" name="selected_role" id="type" required>
                            <option value=""> None </option>
                            @foreach($data as $role)
-                           <option value="{{$role->id}}" {{$role->type == $id ? "selected" : ''}}>
+                           <option value="{{$role->id}}" {{$role->id == $id ? "selected" : ''}}>
                            {{$role->type}}</option>
                            @endforeach
                         </select>
@@ -55,7 +51,11 @@
                     <!-- text input -->   
                     <div class="form-group">
                         <label>Values</label>
-                        <input type="number" id="value" name="value" class="form-control values" placeholder="Enter Values" value="{{$id or ''}}" />
+                        @php ($points = "")
+                        @if($id)
+                          @php ($points = $data[array_search($id, array_column($data->toArray(), 'id'))]->value)
+                        @endif
+                        <input type="number" id="value" name="value" class="form-control values" placeholder="Enter Values" value="{{$points}}" />
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </div>
                     <div class="box-footer" style="height: 50px;">
