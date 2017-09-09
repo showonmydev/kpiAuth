@@ -55,7 +55,7 @@
 								if(isset($data))
 								{
 									$a=$data->accountable;
-									$a=json_decode($a); 
+									$a=explode(",", $a);
 								}
 								?>
 								@foreach($users as $user)
@@ -75,25 +75,25 @@
 							<label for="status">Status</label>
 							<select class="form-control" name="status" id="status" required>
 								<option value="">Select Status</option>
-								<option value="open" {{ isset($data->status) && $data->status=="open" ? 'selected':'' }}>Open</option>
-								<option value="closed" {{ isset($data->status) && $data->status=="closed" ? 'selected':'' }}>Close</option>
-								<option value="hold" {{ isset($data->status) && $data->status=="hold" ? 'selected':'' }}>Hold</option>
+								<option value="Open" {{ isset($data->status) && $data->status=="open" ? 'selected':'' }}>Open</option>
+								<option value="Close" {{ isset($data->status) && $data->status=="close" ? 'selected':'' }}>Close</option>
+								<option value="Hold" {{ isset($data->status) && $data->status=="hold" ? 'selected':'' }}>Hold</option>
 							</select>
 						</div>
 					
 						<div class="form-group">
 							<label for="client_comment">Client Comment</label>
-							<textarea class="form-control" id="client_comment" name="client_comment" rows="3" placeholder="Enter Client Comment">{{$data->client_final_comment or ''}}</textarea>
+							<textarea class="form-control" id="client_comment" name="client_comment" rows="3" placeholder="Enter Client Comment">{{$data->client_comment or ''}}</textarea>
 						</div>
                     
 						<div class="form-group">
 							<label for="business_analysis">Business analysis</label>
 							
-							<select name="ba" class="form-control" required>
-								<option value="">Select Business Analyst</option>
-								<?php foreach($ba as $ba_key => $ba_value){ ?>
-								<option value="<?php echo $ba_value->id;?>" <?php echo !empty($data->business_analyst) && $data->business_analyst == $ba_value->id  ? 'selected' : ''; ?> ><?php echo $ba_value->name;?></option>
-								<?php } ?>
+							<select class="form-control" id="business_analysis" name="business_analysis" required>
+								<option value="">Select business_analysis</option>
+								@foreach($users as $user)
+								<option value="{{$user->id}}" {{ isset($data->business_analysis) && $data->business_analysis==$user->id ? 'selected':'' }}>{{$user->name}}</option>
+								@endforeach
 							</select>
 						</div>
 					
