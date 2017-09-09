@@ -20,7 +20,7 @@ class CreateEvaluateTicketsTable extends Migration {
             $table->integer('project_id')->nullable();
             $table->integer('months');
             $table->integer('year');
-            $table->enum('status', ['enable', 'disable']);
+            $table->enum('status', ['enable', 'disable', 'overdue']);
             $table->timestamp('created_at')->useCurrent();
         });
     }

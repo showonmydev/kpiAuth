@@ -27,19 +27,19 @@
 						<select class="form-control" id="question_for" name="question_for"  required>
 							<option value="">Select Question For</option>
 							@foreach($roles as $role)
-							<option value="{{$role->id}}" {{ isset($data->role_id) && $data->role_id==$role->id ? 'selected':'' }}>{{$role->type}}</option>
+							<option value="{{$role->id}}" {{ isset($data->settings_id) && $data->settings_id==$role->id ? 'selected':'' }}>{{$role->type}}</option>
 							@endforeach
 						</select>
 					</div>
                     
 					<div class="form-group">
 						<label for="Question">Question</label>
-						<textarea class="form-control" id="Question" name="Question" rows="3" placeholder="Enter Question" required>{{$data->question or ''}}</textarea>
+						<textarea class="form-control" id="Question" name="Question" rows="3" placeholder="Enter Question" required>{{$data->text or ''}}</textarea>
 					</div>
                     
 					<div class="form-group">
 						<label for="Suggestion">Suggestion</label>
-						<textarea class="form-control" id="Suggestion" name="Suggestion" rows="3" placeholder="Enter Question Suggestion" required>{{$data->question_suggestion or ''}}</textarea>
+						<textarea class="form-control" id="Suggestion" name="Suggestion" rows="3" placeholder="Enter Question Suggestion" required>{{$data->suggestion or ''}}</textarea>
 					</div>
                     
 					<!-- select -->
@@ -47,8 +47,8 @@
 						<label for="Status">Status</label>
 						<select class="form-control" name="Status" id="Status" required>
 							<option value="">Select Status</option>
-							<option value="enable" {{ isset($data->status) && $data->status=="Active" ? 'selected':'' }}>Active</option>
-							<option value="disable" {{ isset($data->status) && $data->status=="Deactive" ? 'selected':'' }}>Deactive</option>
+							<option value="enable" {{ isset($data->status) && $data->status=="enable" ? 'selected':'' }}>Active</option>
+							<option value="disable" {{ isset($data->status) && $data->status=="disable" ? 'selected':'' }}>Deactive</option>
 						</select>
 					</div>
                     

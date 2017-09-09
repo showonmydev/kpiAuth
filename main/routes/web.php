@@ -65,7 +65,7 @@ Route::group(['middleware' => ['checkuser','CheckAdmin']], function() {
 	Route::post('/add_evaluation_point', 'Admin\EvaluationPointController@add_evaluation_points');
 	Route::get('/edit_evaluation_point/{id}', "Admin\EvaluationPointController@edit_evaluation_points");
 	Route::get('/delete_evaluation_point/{id}', "Admin\EvaluationPointController@delete_evaluation_points");
-	Route::post('edit_evaluation_point/add_evaluation_points','Admin\EvaluationPointController@add_evaluation_points');
+	Route::post('edit_evaluation_point/add_evaluation_point','Admin\EvaluationPointController@add_evaluation_points');
 	//End of Route of EvaluationPointController Section  
 
     //point_value_settings
@@ -77,6 +77,19 @@ Route::group(['middleware' => ['checkuser','CheckAdmin']], function() {
     //End of point_value_settings Routes
 });
 //End of Admin Route Middleware
+
+
+//start of Admin Route Middleware
+Route::group(['middleware' => 'checkuser'], function() {
+	//this route for HR
+	Route::get('ticket/view','Ticket\Ticket@get_ticket');
+	//get all comment by ID
+	Route::post('get_comment','Ticket\comment@get_all_comment');
+	});
+	//submit Comment
+	Route::post('add_comment','Ticket\comment@submit_comment');
+	//final question submit
+	Route::post('add_final_submit','Ticket\comment@final_comment');
 
 Route::any('/', function(){
     return view('auth.login');

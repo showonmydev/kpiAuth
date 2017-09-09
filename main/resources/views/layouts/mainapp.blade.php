@@ -41,7 +41,7 @@
   </head>
   <body class="skin-blue">
     <div class="wrapper">
-      
+
       <header class="main-header">
         <!-- Logo -->
         <a href="" class="logo"><b>Dashboard</b></a>
@@ -62,18 +62,24 @@
             <div class="pull-left image">
               <img src="{{asset('assets/dist/img/avatar5.png')}}" class="img-circle" alt="User Image" />
             </div>
+            <?php
+            $all_role=DB::table('roles')->select('role')->where('id',auth()->user()->role_id)->get()->first();
+            $current_user_role_id=auth()->user()->role_id;
+            ?>
             <div class="pull-left info">
-              <h5>{{strtoupper(auth()->user()->name)}}</h5>
+            	<big><big>
+              <p align="center">&nbsp&nbsp{{strtoupper(auth()->user()->name)}}</p>
+              	</big></big>
+              <p align="center">{{strtoupper($all_role->role)}}</p>
+
             </div>
           </div>
           <!-- sidebar menu: : style can be found in sidebar.less -->
-          
+
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <?php 
-            $user_arr=explode(",",auth()->user()->role_id);
-            ?>
-            @if(in_array("1", $user_arr))
+
+            @if(isset($all_role->role) && strtolower($all_role->role)=="admin")
             <li class="active treeview">
               <a href="{{url('/home')}}">
                 <i class="fa fa-home"></i> <span>Dashboard</span>
@@ -83,7 +89,7 @@
                 <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
               </ul>-->
             </li>
-            
+
             <!--register user-->
             <li class="treeview">
               
@@ -136,7 +142,7 @@
                   </li>
               </ul>
             </li>
-            
+
             <li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='add_user') || (Request::path() =='view_user')  || (Request::path() =='edit_user') )?'active' :'' ?>">
               <a href="#">
                 <i class="fa fa-user"></i><span>User Management</span>
@@ -158,7 +164,7 @@
               </ul>
             </li>
             <!--register user end-->
-            
+
             <!--Point Setting Section-->
             <li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='add_points') || (Request::path() =='view_points'))?'active' :'' ?>">
               <a href="#">
@@ -203,6 +209,88 @@
               </ul>
             </li>
             @endif
+ 
+	<!--these menu for HR Role-->
+	@if(isset($all_role->role) && (strtolower($all_role->role)=="hr") )
+
+			<li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='ticket/view') || (Request::path() =='ticket/view'))?'active' :'' ?>">
+		  <a href="#">
+			<i class="fa fa-comments"></i> <span>Users</span>
+			<span class="pull-right-container">
+			  <i class="fa fa-angle-left pull-right"></i>
+			</span>
+		  </a>
+		  <ul class="treeview-menu">
+			<li class="<?php echo (!empty(Request::path()) && (Request::path() =='ticket/view') )?'active' :'' ?>">
+			  <a href="{{url('ticket/view')}}">
+			  <i class="fa  fa-plus-square"></i> <span>All User</span>
+			  </a>
+			</li>
+		  </ul>
+		</li>
+	@endif
+	<!--End of HR Role Menu-->
+
+	<!--these menu for developer Role-->
+	@if(isset($all_role->role) && strtolower($all_role->role)=="developer")
+			<li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='ticket/view') || (Request::path() =='ticket/view'))?'active' :'' ?>">
+		  <a href="#">
+			<i class="fa fa-comments"></i> <span>Project</span>
+			<span class="pull-right-container">
+			  <i class="fa fa-angle-left pull-right"></i>
+			</span>
+		  </a>
+		  <ul class="treeview-menu">
+			<li class="<?php echo (!empty(Request::path()) && (Request::path() =='ticket/view') )?'active' :'' ?>">
+			  <a href="{{url('ticket/view')}}">
+			  <i class="fa  fa-plus-square"></i> <span>View Project</span>
+			  </a>
+			</li>
+		  </ul>
+		</li>
+	@endif
+	<!--End of developer Role Menu-->
+
+	<!--these menu for Designer Role-->
+	@if(isset($all_role->role) && strtolower($all_role->role)=="designer")
+			<li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='add_evaluation_point') || (Request::path() =='view_evaluation_point'))?'active' :'' ?>">
+		  <a href="#">
+			<i class="fa fa-comments"></i> <span>Project</span>
+			<span class="pull-right-container">
+			  <i class="fa fa-angle-left pull-right"></i>
+			</span>
+		  </a>
+		  <ul class="treeview-menu">
+			<li class="<?php echo (!empty(Request::path()) && (Request::path() =='add_question') )?'active' :'' ?>">
+			  <a href="{{url('/add_evaluation_point')}}">
+			  <i class="fa  fa-plus-square"></i> <span>View Project</span>
+			  </a>
+			</li>
+		  </ul>
+		</li>
+	@endif
+	<!--End of Designer Role Menu-->
+
+	<!--these menu for business analyst Role-->
+	@if(isset($all_role->role) && strtolower($all_role->role)=="business analyst")
+			<li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='add_evaluation_point') || (Request::path() =='view_evaluation_point'))?'active' :'' ?>">
+		  <a href="#">
+			<i class="fa fa-comments"></i> <span>Project</span>
+			<span class="pull-right-container">
+			  <i class="fa fa-angle-left pull-right"></i>
+			</span>
+		  </a>
+		  <ul class="treeview-menu">
+			<li class="<?php echo (!empty(Request::path()) && (Request::path() =='add_question') )?'active' :'' ?>">
+			  <a href="{{url('/add_evaluation_point')}}">
+			  <i class="fa  fa-plus-square"></i> <span>View Project</span>
+			  </a>
+			</li>
+		  </ul>
+		</li>
+	@endif
+	<!--End of business analyst Role Menu-->
+
             <li>
 	            <a href='{{url("logout")}}'><i class="icon-key"></i> Log Out </a>
 	        </li>
@@ -215,7 +303,7 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          
+
 
                  @yield('content')
      
@@ -224,7 +312,7 @@
     <!-- jQuery 2.1.3 -->
     <script src="{{asset('assets/plugins/jQuery/jQuery-2.1.3.min.js')}}"></script>
 
-    
+
 
     <!-- sweet alert -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.js"></script>
@@ -251,12 +339,11 @@
     <script src="{{asset('assets/dist/js/app.min.js')}}" type="text/javascript"></script>
 
 
-<!-- custom js -->
-<script src="{{asset('assets/dist/js/custom.js')}}" type="text/javascript"></script>  
+    <!-- custom js -->
+    <script src="{{asset('assets/dist/js/custom.js')}}" type="text/javascript"></script>
 
  <!--form validation js-->
 <script src="{{asset('assets/js/jQueryValidation.js')}}" type="text/javascript"></script>
-
  <script src="{{asset('assets/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
     <!--sweet alert-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.js"></script>
