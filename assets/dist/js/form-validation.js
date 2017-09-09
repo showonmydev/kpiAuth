@@ -1,3 +1,18 @@
+//FORM VALIDATION FOR IP SETTINGS
+$(function() {
+  $("form[name='ip_setting']").validate({
+    rules: {
+      ips: "required",
+    },
+    // Specify validation error messages
+    messages: {
+      ips: "Please enter the IP's",
+    },
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
 // Wait for the DOM to be ready
 $(function() {
   // Initialize form validation on the registration form.
@@ -88,3 +103,4 @@ $(function() {
             window.location.href = x + 'add_points/' + selected;
     });
 });
+

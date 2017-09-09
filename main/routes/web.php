@@ -74,7 +74,14 @@ Route::group(['middleware' => ['checkuser','CheckAdmin']], function() {
     Route::post('add_points/points_post', 'Admin\PointValueSettingController@points_post')->name('points_post');
     Route::get('/view_points', 'Admin\PointValueSettingController@view_points')->name('view_points');
     Route::get('delete_points/{id}',  'Admin\PointValueSettingController@delete_points');
+
+    Route::get('File-upload','Admin\PointValueSettingController@fileupload');
     //End of point_value_settings Routes
+
+
+    // for ip settings
+    Route::any('Ip-setting','Admin\IPController@ip_setting');
+
 });
 //End of Admin Route Middleware
 
