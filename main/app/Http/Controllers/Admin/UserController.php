@@ -74,14 +74,6 @@ class UserController extends Controller
             }
 
             $input=Input::all();
-            $role = '';
-            if(!empty($input['roles'])){
-                foreach ($input['roles'] as $key => $value) {
-                    $role .= $value.',';   
-                }
-                $role = rtrim($role,',');
-                $role = !empty($role)?$role:'';    
-            }
 
             if(empty($input['id'])){
     
@@ -96,8 +88,10 @@ class UserController extends Controller
                     'name'      => $input['username'],
                     'password'  => bcrypt($input['password']),
                     'email'     => $input['email'],
-                    'role'      => $role,
-                    'reporting_person' => '',
+                    'role_id'      => $input['role'],
+                    'reporting_person' => 1,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'created_at' => date('Y-m-d H:i:s'),
                         );
                 
                 $users = DB::table('users')->insert($user);
@@ -142,5 +136,25 @@ class UserController extends Controller
         // Delete specific records
         $id = $request->id;
         DB::table('users')->where('id', $id)->delete();
+    }
+
+    //to get ip address of system
+    function get_client_ip() {
+        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if(getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if(getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if(getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if(getenv('HTTP_FORWARDED'))
+           $ipaddress = getenv('HTTP_FORWARDED');
+        else if(getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
     }
 }

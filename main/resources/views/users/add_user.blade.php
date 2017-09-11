@@ -77,9 +77,7 @@
                      <div class="col-sm-2"> 
                         <div class="form-group">
                           <label>
-                            <input type="radio" name="role" class="flat-red" value="<?php echo $value->id; ?>" <?php if(!empty($users[0]->role)){ $role_array = explode(',', $users[0]->role);
-                           
-                         foreach($role_array as $a_r){ if($value->id == $a_r){echo "checked";} } } ?>  ><?php echo $value->role; ?> 
+                            <input type="radio" name="role" class="flat-red" value="<?php echo $value->id; ?>" <?php if(!empty($users[0]->role_id)){  if($value->id == $users[0]->role_id){echo "checked";} } ?>  ><?php echo $value->role; ?> 
                             
                           </label>
                         </div>    

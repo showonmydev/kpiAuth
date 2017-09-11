@@ -100,6 +100,15 @@
               </ul>-->
             </li>
 
+            <li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='Ip-setting') || (Request::path() =='Ip-setting')  )?'active' :'' ?>">
+              <a href="{{url('Ip-setting')}}">
+                <i class="fa fa-location-arrow"></i><span>IP Management</span>
+                <span class="pull-right-container">
+
+                </span>
+              </a>
+            </li>
+
             <li class="treeview <?php echo (!empty(Request::path()) && (Request::path() =='add_role') || (Request::path() =='view_role')  )?'active' :'' ?>">
               <a href="#">
                 <i class="fa fa-group"></i><span>Role Management</span>
